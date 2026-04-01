@@ -5,18 +5,26 @@ import java.util.Arrays;
 public class GameState {
 
     private final Cell[] cells;
+    private final String instructions;
 
-    private GameState(Cell[] cells) {
+    private GameState(Cell[] cells, String instructions) {
         this.cells = cells;
+        this.instructions = instructions;
     }
 
+    /** Transform the Game into a GameState, which is the view-specific data for the game. */
     public static GameState forGame(Game game) {
         Cell[] cells = getCells(game);
-        return new GameState(cells);
+        String instructions = getInstructions(game);
+        return new GameState(cells, instructions);
     }
 
     public Cell[] getCells() {
         return this.cells;
+    }
+
+    public String getInstructions() {
+        return this.instructions;
     }
 
     /**
@@ -26,8 +34,8 @@ public class GameState {
     @Override
     public String toString() {
         return """
-                { "cells": %s}
-                """.formatted(Arrays.toString(this.cells));
+                { "cells": %s, "instructions": "%s"}
+                """.formatted(Arrays.toString(this.cells), this.instructions);
     }
 
     private static Cell[] getCells(Game game) {
@@ -49,6 +57,38 @@ public class GameState {
             }
         }
         return cells;
+    }
+
+    /** Get the instructions for the current game state */
+    private static String getInstructions(Game game) {
+        Player winner = game.getWinner();
+
+        // Check for winner
+        if (winner != null) {
+            String playerSymbol = (winner == Player.PLAYER0) ? "X" : "O";
+            return "Player " + playerSymbol + " wins!";
+        }
+
+        // Check for draw
+        boolean boardFull = true;
+        Board board = game.getBoard();
+        for (int x = 0; x <= 2; x++) {
+            for (int y = 0; y <= 2; y++) {
+                if (board.getCell(x, y) == null) {
+                    boardFull = false;
+                    break;
+                }
+            }
+            if (!boardFull) break;
+        }
+        if (boardFull) {
+            return "It's a draw!";
+        }
+
+        // Game still in progress
+        Player currentPlayer = game.getPlayer();
+        String playerSymbol = (currentPlayer == Player.PLAYER0) ? "X" : "O";
+        return "Player " + playerSymbol + "'s turn";
     }
 }
 

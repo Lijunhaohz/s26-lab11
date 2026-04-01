@@ -34,7 +34,7 @@ class App extends React.Component<Props, GameState> {
     /**
      * state has type GameState as specified in the class inheritance.
      */
-    this.state = { cells: [] }
+    this.state = { cells: [], instructions: '' }
   }
 
   /**
@@ -45,7 +45,7 @@ class App extends React.Component<Props, GameState> {
   newGame = async () => {
     const response = await fetch('/newgame');
     const json = await response.json();
-    this.setState({ cells: json['cells'] });
+    this.setState({ cells: json['cells'], instructions: json['instructions'] });
   }
 
   /**
@@ -61,7 +61,7 @@ class App extends React.Component<Props, GameState> {
       e.preventDefault();
       const response = await fetch(`/play?x=${x}&y=${y}`)
       const json = await response.json();
-      this.setState({ cells: json['cells'] });
+      this.setState({ cells: json['cells'], instructions: json['instructions'] });
     }
   }
 
@@ -115,6 +115,7 @@ class App extends React.Component<Props, GameState> {
      */
     return (
       <div>
+        <div id="instructions">{this.state.instructions}</div>
         <div id="board">
           {this.state.cells.map((cell, i) => this.createCell(cell, i))}
         </div>

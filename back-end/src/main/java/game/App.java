@@ -29,6 +29,10 @@ public class App extends NanoHTTPD {
         System.out.println("\nRunning!\n");
     }
 
+    /**
+     * Serve the HTTP request. The server will receive requests from the client, and update the game state accordingly.
+     * The returned data will be in JSON format.
+     */
     @Override
     public Response serve(IHTTPSession session) {
         String uri = session.getUri();
