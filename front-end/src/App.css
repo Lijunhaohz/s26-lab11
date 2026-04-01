@@ -1,47 +1,181 @@
-#board {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  background-color: #2196F3;
-  padding: 10px
-}
-
-.cell {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  height: 25vmin;
-  text-align: center;
-}
-
-#bottombar {
-  height: 5vh;
-}
-
-#instructions {
-  height: 5vh;
-  background-color: white;
-  padding: 0px;
-  margin: 0px;
-  text-align: center;
-  border: 1px solid black;
-}
-
-#bottombar button {
-  width: 50%;
-  /* height: 100%; */
-  margin: 0;
-  padding: 0;
-  position: relative;
-  float: left;
-  font-size: 2vw
-}
-
+/* Global Styles */
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.playable { background-color: red;}
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Main Container */
+#root > div {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Instructions Section */
+#instructions {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Game Board */
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cell Styles */
+.cell {
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  font-size: 48px;
+  font-weight: bold;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: default;
+  color: #333;
+}
+
+.cell:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Playable Cell */
+.playable {
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  cursor: pointer;
+  position: relative;
+}
+
+.playable:hover {
+  background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.playable:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+/* Link styling for playable cells */
+#board a {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Bottom Bar */
+#bottombar {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+#bottombar button {
+  flex: 1;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#bottombar button:first-child {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+#bottombar button:first-child:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+#bottombar button:first-child:active {
+  transform: translateY(0);
+}
+
+#bottombar button:last-child {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+#bottombar button:last-child:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+}
+
+#bottombar button:last-child:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+#bottombar button:disabled {
+  background: linear-gradient(135deg, #cccccc 0%, #999999 100%);
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .cell {
+    height: 80px;
+    font-size: 36px;
+  }
+
+  #instructions {
+    font-size: 18px;
+    padding: 15px;
+  }
+
+  #bottombar button {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+}
